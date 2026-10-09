@@ -1,0 +1,11 @@
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+The bundled pose_estimation_mediapipe_2023mar.onnx model is redistributed from
+the OpenCV Zoo pose_estimation_mediapipe directory, whose files are licensed
+under the Apache License 2.0:
+https://github.com/opencv/opencv_zoo/tree/main/models/pose_estimation_mediapipe
+
+The full Apache License 2.0 text is available at:
+https://www.apache.org/licenses/LICENSE-2.0
