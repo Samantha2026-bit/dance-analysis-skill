@@ -1,0 +1,8 @@
+interface:
+  display_name: "Dance Pose Coach"
+  short_description: "Analyze local dance pose, rhythm, and movement flow"
+  brand_color: "#6D5EF5"
+  default_prompt: "Use $dance-pose-coach to analyze my dance video against a reference and explain the improvement report."
+policy:
+  allow_implicit_invocation: true
+
