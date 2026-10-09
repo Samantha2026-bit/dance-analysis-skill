@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dance-pose-coach"
+version = "0.6.0"
+description = "Local-first dance pose, rhythm, and movement-flow comparison"
+readme = "README.md"
+requires-python = ">=3.9,<3.13"
+license = {text = "MIT"}
+authors = [{name = "Dance Pose Coach contributors"}]
+keywords = ["dance", "mediapipe", "pose", "rhythm", "gradio"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Video",
+]
+dependencies = [
+  "gradio>=4.44,<5",
+  # Gradio 4.44's schema conversion is incompatible with the newer boolean
+  # additionalProperties schema emitted by Pydantic 2.11+.
+  "fastapi>=0.112,<0.113",
+  "pydantic>=2.8,<2.10",
+  "huggingface-hub>=0.19.3,<1",
+  "opencv-contrib-python>=4.9,<4.11",
+  # Ships a platform-specific FFmpeg executable, so end users do not need
+  # Homebrew, winget, or a separate system installation.
+  "imageio-ffmpeg>=0.5,<0.7",
+  "numpy>=1.24,<2",
+  "scipy>=1.10,<1.13",
+  "librosa>=0.10.2,<0.11",
+  # Keep a wheel-backed version on Python 3.9-3.12 instead of attempting a
+  # source build of a future numba release pulled transitively by librosa.
+  "numba>=0.59,<0.62",
+  "soundfile>=0.12,<1",
+  "yt-dlp>=2024.8.6",
+  "Jinja2>=3.1,<4",
+]
+
+[project.optional-dependencies]
+recognition = ["shazamio>=0.7,<0.9"]
+legacy-mediapipe = ["mediapipe==0.10.18"]
+dev = ["pytest>=8,<9", "ruff>=0.6,<1"]
+
+[project.scripts]
+dance-pose-coach = "dance_pose_coach.app:main"
+dance-pose-analyze = "dance_pose_coach.cli:main"
+dance-pose-doctor = "dance_pose_coach.runtime:doctor_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"dance_pose_coach.assets" = ["*.onnx", "*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/dance_pose_coach/app.py" = ["B008"]
+"src/dance_pose_coach/report.py" = ["E501"]
+"src/dance_pose_coach/solo_report.py" = ["E501"]
